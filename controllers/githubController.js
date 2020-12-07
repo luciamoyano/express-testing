@@ -1,10 +1,29 @@
 const axios = require("axios");
 
 class githubController {
-  getUser(req, res) {
-    const data = axios.get("https://api.github.com/users/doomling");
-    console.log(data);
-    res.send("algo para no colgar la request");
+  async getUser(req, res) {
+    const github = await axios.get(
+      `https://api.github.com/users/${req.params.name}`
+    );
+    res.json(github.data);
+  }
+
+  async getDetails(req, res) {
+    const github = await axios.get(
+      `https://api.github.com/users/${req.params.id}`
+    );
+    const modeledData = {
+      nombre: github.data.name,
+      empresa: github.data.company,
+      bio: github.data.bio,
+    };
+
+    const allData = {
+      ...modeledData,
+      edad: 27,
+      helado: "dulce de leche",
+    };
+    res.json(allData);
   }
 }
 

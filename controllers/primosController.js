@@ -1,7 +1,9 @@
+const axios = require("axios");
+
 class PrimosController {
   //cuantos numeros primos existen entre 1 y 150
-  getPrime(req, res) {
-    const finalArr = [];
+  async getPrime(req, res) {
+    const primesArr = [];
     let maxNum = 150;
 
     function isPrime(num) {
@@ -17,15 +19,20 @@ class PrimosController {
     for (let i = 1; i <= maxNum; i++) {
       let result = isPrime(i);
       if (result) {
-        finalArr.push(i);
+        const pokemonApi = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${i}`
+        );
+        const { name } = pokemonApi.data.species;
+        const { id } = pokemonApi.data;
+
+        primesArr.push({
+          primeNumber: id,
+          pokemonName: name,
+        });
       }
     }
 
-    const results = {
-      primeQuantity: finalArr.length,
-      primeList: finalArr,
-    };
-    res.json(results);
+    res.json(primesArr);
   }
 }
 

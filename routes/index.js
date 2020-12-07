@@ -14,6 +14,10 @@ const PalindromoInstance = new PalindromoController();
 
 const PrimosController = require("../controllers/primosController");
 const PrimosInstance = new PrimosController();
+
+const GithubController = require("../controllers/githubController");
+const GithubInstance = new GithubController();
+
 //Ejercicios: https://gist.github.com/doomling/3338b2c6746e473af0de3cea9faca67c
 
 //Ejercicio 3
@@ -40,6 +44,16 @@ router.get("/palindromo/:phrase", (req, res, next) => {
 //Ejercicio 0
 router.get("/calcular", (req, res, next) => {
   PrimosInstance.getPrime(req, res);
+});
+
+//Ejercicio 1
+router.get("/user/:name", (req, res, next) => {
+  GithubInstance.getUser(req, res);
+});
+
+//Ejercicio 3 y 4
+router.get("/user/:id/details", (req, res, next) => {
+  GithubInstance.getDetails(req, res);
 });
 
 /* GET home page. */
